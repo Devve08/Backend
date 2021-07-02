@@ -1,25 +1,25 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv/config");
+import express, { json } from "express";
+import cors from "cors";
+import { connect, connection } from "mongoose";
+import "dotenv/config";
 
-const productRouter = require("./routes/product");
-const userRouter = require("./routes/user");
+import productRouter from "./routes/product";
+import userRouter from "./routes/user";
 
 const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // connecting to database
 
-mongoose.connect(process.env.ATLAS_URI, {
+connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-mongoose.connection
+connection
   .once("open", () => {
     console.log("connected");
   })
