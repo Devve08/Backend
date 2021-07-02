@@ -1,10 +1,8 @@
-const express = require('express')
-const router = express.Router()
-
+const express = require("express");
+const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.send("hello all")
-})
+  res.send("hello all");
+});
 
-
-module.exports = router
+module.exports = router;
