@@ -1,8 +1,16 @@
 import { Router } from "express";
-const router = Router();
+import User from "../models/user.model.js";
+import expressAsyncHandler from "express-async-handler";
+import data from "../data.js";
 
-router.get("/", (req, res) => {
-  res.send(user);
-});
+const userRouter = Router();
 
-export default router;
+userRouter.get(
+  "/add",
+  expressAsyncHandler(async (req, res) => {
+    const createUser = await User.insertMany(data.users);
+    res.send({ createUser });
+  })
+);
+
+export default userRouter;

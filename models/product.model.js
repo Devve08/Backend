@@ -1,11 +1,12 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const Schema = Mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-  product_name: {
+  name: {
     type: String,
     required: true,
+    unique: true
   },
 
   image: {
@@ -28,7 +29,7 @@ const productSchema = new Schema({
     required: true,
   },
 
-  Price: {
+  price: {
     type: Number,
     required: true,
   },
@@ -53,13 +54,12 @@ const productSchema = new Schema({
     required: true,
   },
 
-  product_ID: {
+  numReviews:{
     type: Number,
-    unique: true,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);
 
-module.exports = Product;
+export default Product
