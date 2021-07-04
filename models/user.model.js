@@ -1,14 +1,9 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const Schema = Mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  firstname: {
-    type: String,
-    required: true,
-  },
-
-  lastname: {
+  name: {
     type: String,
     required: true,
   },
@@ -24,6 +19,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true
+  },
+
+  isAdmin:{
+    type: Boolean,
+    default: false,
+    required: true
   },
 
   address: {
@@ -39,4 +41,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+export default User;

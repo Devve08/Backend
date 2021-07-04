@@ -1,10 +1,10 @@
 import express, { json } from "express";
 import cors from "cors";
-import { connect, connection } from "mongoose";
+import mongoose from "mongoose";
 import "dotenv/config";
 
-import productRouter from "./routes/product";
-import userRouter from "./routes/user";
+import productRouter from "./routes/product.js";
+import userRouter from "./routes/user.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -14,12 +14,13 @@ app.use(json());
 
 // connecting to database
 
-connect(process.env.ATLAS_URI, {
+mongoose.connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
-connection
+mongoose.connection
   .once("open", () => {
     console.log("connected");
   })
@@ -27,7 +28,12 @@ connection
     console.log(e);
   });
 
-app.use("/product", productRouter);
+app
+  .use("/product", productRouter)
+
+  .on("error", (error) => {
+    console.log("your error", error);
+  });
 app
   .use("/user", userRouter)
 
@@ -35,6 +41,9 @@ app
     console.log("your error", error);
   });
 
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
 //listening to port
 
 app.listen(port, () => {
