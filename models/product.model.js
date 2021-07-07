@@ -6,12 +6,12 @@ const productSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true
   },
 
   image: {
     type: String,
     required: true,
+    unique: true
   },
 
   sex: {
@@ -56,7 +56,7 @@ const productSchema = new Schema({
 
   numReviews:{
     type: Number,
-    required: true
+    required: true,
   }
 });
 

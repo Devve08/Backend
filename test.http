@@ -1,12 +1,3 @@
-POST http://localhost:4000/user/add
+GET  http://localhost:4000/product
 Content-Type: application/json
 
-{
-    "name": "Ali",
-    "email": "ali@pixel38.com",
-    "username": "Ali123",
-    "password": "bcrypt.hashSync('1234', 8)",
-    "isAdmin": true,
-    "phone": "03497489",
-    "address": "beirut"
-}

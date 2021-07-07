@@ -11,4 +11,4 @@ export const addUser = expressAsyncHandler(async (req, res) => {
 export const getUser = expressAsyncHandler(async (req, res) =>{
     const getUsers = await User.find({});
     res.send({getUsers});
-})  
+})
