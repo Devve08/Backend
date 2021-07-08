@@ -1,10 +1,10 @@
-POST http://localhost:4000/user/add
+PUT http://localhost:4000/user/update/60e43dfbd44fb6503309b1ff
 Content-Type: application/json
 
 {
     "name": "Ali",
-    "email": "ali@pixel38.com",
-    "username": "Ali123",
+    "email": "ali@gmail.cUm",
+    "username": "Ali1231",
     "password": "bcrypt.hashSync('1234', 8)",
     "isAdmin": true,
     "phone": "03497489",

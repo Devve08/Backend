@@ -19,13 +19,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
 
-  isAdmin:{
+  isAdmin: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   },
 
   address: {
