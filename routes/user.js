@@ -8,7 +8,7 @@ import {
 
 const userRouter = Router();
 
-userRouter.get("/", getUser);
+userRouter.post("/login", getUser);
 
 userRouter.post("/add", addUser);
 
