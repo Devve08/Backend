@@ -1,6 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
-// import data from "../data.js";
 
 export const getUser = expressAsyncHandler(async (req, res) => {
   let user = req.body.username;
@@ -36,7 +35,9 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         console.log(err);
         return res.status(500).json(err);
       } else {
-        res.status(200).json({ success: true, message: "Sign-up successfull" });
+        res
+          .status(200)
+          .json({ success: true, message: "Sign-up successfull", data: docs });
       }
     }
   );

@@ -28,18 +28,20 @@ mongoose.connection
     console.log(e);
   });
 
-app
-  .use("/product", productRouter)
+app.use("/product", productRouter);
 
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
-app
-  .use("/user", userRouter)
+// .on("error", (error) => {
+//   console.log("your error", error);
+// });
+app.use("/user", userRouter);
 
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
+// .on("error", (error) => {
+//   console.log("your error", error);
+// });
+
+app.on("error", (e) => {
+  console.log("your error", e);
+});
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
