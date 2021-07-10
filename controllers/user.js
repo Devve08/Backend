@@ -4,24 +4,19 @@ import User from "../models/user.model.js";
 export const getUser = expressAsyncHandler(async (req, res) => {
   let user = req.body.username;
   let pass = req.body.password;
-  const getUsers = await User.find(
-    { username: user, password: pass },
-    (e, doc) => {
-      if (doc.length === 0 || e) {
-        return res
-          .status(403)
-          .json({ message: "Username or passowrd are wrong" });
-      } else {
-        return res.status(200).json(doc);
-      }
+  await User.find({ username: user, password: pass }, (e, doc) => {
+    if (doc.length === 0 || e) {
+      return res.status(403).json({});
+    } else {
+      return res.status(200).json(doc);
     }
-  );
+  });
 });
 
 export const addUser = expressAsyncHandler(async (req, res) => {
   let { password, username, name, email, address, phone } = req.body;
   console.log(password, username);
-  const createUser = await User.insertMany(
+  await User.insertMany(
     {
       username: username,
       password: password,
