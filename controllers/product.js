@@ -2,9 +2,15 @@ import expressAsyncHandler from "express-async-handler";
 import Product from "../models/product.model.js";
 
 export const getProducts = expressAsyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  console.log(products);
-  res.send({ products });
+  const products = await Product.find({},(e, doc)=> {
+    console.log(doc)
+    if(doc.length === 0 || e){
+      return res.json({message: "123"})
+    } else {
+      return res.send(doc)
+    }
+  });
+  // res.send({ products });
 });
 
 export const addProducts = expressAsyncHandler(async (req, res) => {
