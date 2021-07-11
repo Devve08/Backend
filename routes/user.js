@@ -1,4 +1,5 @@
 import { Router } from "express";
+import authenticateToken from "../controllers/auth.js";
 import {
   addUser,
   deleteUser,
@@ -8,7 +9,7 @@ import {
 
 const userRouter = Router();
 
-userRouter.post("/login", getUser);
+userRouter.post("/login", authenticateToken, getUser);
 
 userRouter.post("/add", addUser);
 

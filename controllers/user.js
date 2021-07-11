@@ -1,27 +1,38 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
+import { jwtCreate } from "../controllers/jwt.js";
+import bcrypt from "bcrypt";
 
 export const getUser = expressAsyncHandler(async (req, res) => {
-  let user = req.body.username;
-  let pass = req.body.password;
-  await User.find({ username: user, password: pass }, (e, doc) => {
+  const { username, password } = req.body;
+
+  const user = User.find({ username: username }, async (e, doc) => {
     if (doc.length === 0 || e) {
-      return res.status(403).json({});
+      return res.status(403).send("no");
+    }
+    if (await bcrypt.compare(password, doc[0].password)) {
+      const token = jwtCreate(username);
+      return res.status(200).json({ doc, token });
     } else {
-      return res.status(200).json(doc);
+      return res.send("wrong password");
     }
   });
 });
 
 export const addUser = expressAsyncHandler(async (req, res) => {
-  let { password, username, name, email, address, phone } = req.body;
-  console.log(password, username);
+  let { name, username, password, email, address, phone } = req.body;
+
+  // const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(password, 10);
+  console.log(hashedPassword);
+
   await User.insertMany(
     {
-      username: username,
-      password: password,
       name: name,
+      username: username,
+      password: hashedPassword,
       email: email,
+      isAdmin: false,
       address: address,
       phone: phone,
     },
@@ -30,9 +41,13 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         console.log(err);
         return res.status(500).json(err);
       } else {
-        res
-          .status(200)
-          .json({ success: true, message: "Sign-up successfull", data: docs });
+        const token = jwtCreate(username);
+        return res.status(200).json({
+          success: true,
+          message: "Sign-up successfull",
+          data: docs,
+          token,
+        });
       }
     }
   );
