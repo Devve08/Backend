@@ -10,8 +10,8 @@ const authenticateToken = (req, res, next) => {
   } else {
     // const bearer = authHeader.split(" ")[1];
     req.token = authHeader;
-    // validate the token
-    // search how to validate token with "jsonwebtoken"
+    //I have to validate the token
+
 
     console.log("worked");
     next();

@@ -2,19 +2,22 @@ import expressAsyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
 import { jwtCreate } from "../controllers/jwt.js";
 import bcrypt from "bcrypt";
+import { hashPassword } from "./bcrypt.js";
 
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const user = User.find({ username: username }, async (e, doc) => {
     if (doc.length === 0 || e) {
-      return res.status(403).send("no");
+      return res.status(403);
     }
-    if (await bcrypt.compare(password, doc[0].password)) {
+    // if (await bcrypt.compare(password, doc[0].password)) {
+    if (password === doc[0].password) {
       const token = jwtCreate(username);
+      console.log(password, doc[0].password);
       return res.status(200).json({ doc, token });
     } else {
-      return res.send("wrong password");
+      return res.json("wrong password");
     }
   });
 });
@@ -22,15 +25,11 @@ export const getUser = expressAsyncHandler(async (req, res) => {
 export const addUser = expressAsyncHandler(async (req, res) => {
   let { name, username, password, email, address, phone } = req.body;
 
-  // const salt = await bcrypt.genSalt();
-  const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(hashedPassword);
-
   await User.insertMany(
     {
       name: name,
       username: username,
-      password: hashedPassword,
+      password: await hashPassword(password),
       email: email,
       isAdmin: false,
       address: address,
@@ -38,8 +37,9 @@ export const addUser = expressAsyncHandler(async (req, res) => {
     },
     (err, docs) => {
       if (err) {
-        console.log(err);
-        return res.status(500).json(err);
+        let error = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
+
+        return res.json(error).status(400);
       } else {
         const token = jwtCreate(username);
         return res.status(200).json({
