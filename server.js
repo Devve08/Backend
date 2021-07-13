@@ -5,6 +5,7 @@ import "dotenv/config";
 
 import productRouter from "./routes/product.js";
 import userRouter from "./routes/user.js";
+import cartRouter from "./routes/cart.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -27,6 +28,10 @@ mongoose.connection
   .on("e", (e) => {
     console.log(e);
   });
+
+app.use("/cart", cartRouter).on("error", (error) => {
+  console.log("your error", error);
+});
 
 app
   .use("/product", productRouter)
