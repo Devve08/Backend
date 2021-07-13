@@ -15,17 +15,22 @@ const userSchema = new Schema({
     unique: true,
   },
 
+  password: {
+    type: String,
+    required: true,
+  },
+
   email: {
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
 
-  isAdmin:{
+  isAdmin: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   },
 
   address: {

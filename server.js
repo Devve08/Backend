@@ -3,9 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 
-import productRouter from "./routes/product.js";
-import userRouter from "./routes/user.js";
-import cartRouter from "./routes/cart.js";
+import appRoutes from "./routes/index.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -29,22 +27,10 @@ mongoose.connection
     console.log(e);
   });
 
-app.use("/cart", cartRouter).on("error", (error) => {
-  console.log("your error", error);
+app.use(appRoutes);
+app.on("error", (e) => {
+  console.log("your error", e);
 });
-
-app
-  .use("/product", productRouter)
-
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
-app
-  .use("/user", userRouter)
-
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
