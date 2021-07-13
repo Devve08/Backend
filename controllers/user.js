@@ -50,15 +50,8 @@ export const updateUser = expressAsyncHandler(async (req, res) => {
   res.send({ updateUsers });
 });
 
-<<<<<<< HEAD
-export const getUser = expressAsyncHandler(async (req, res) =>{
-    const getUsers = await User.find({});
-    res.send({getUsers});
-})
-=======
 export const deleteUser = expressAsyncHandler(async (req, res) => {
   let id = req.params.id;
   const deleteUsers = await User.deleteOne({ _id: id });
   res.send({ deleteUsers });
 });
->>>>>>> 162a11389a6ce851042ebbcd1f7b7b3761dcbf41
