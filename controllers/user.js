@@ -11,13 +11,11 @@ export const getUser = expressAsyncHandler(async (req, res) => {
     if (doc.length === 0 || e) {
       return res.status(403);
     }
-    // if (await bcrypt.compare(password, doc[0].password)) {
-    if (password === doc[0].password) {
+    if (await bcrypt.compare(password, doc[0].password)) {
       const token = jwtCreate(username);
-      console.log(password, doc[0].password);
       return res.status(200).json({ doc, token });
     } else {
-      return res.json("wrong password");
+      return res.json({ message: "wrong password" }).status(401);
     }
   });
 });
@@ -37,9 +35,8 @@ export const addUser = expressAsyncHandler(async (req, res) => {
     },
     (err, docs) => {
       if (err) {
-        let error = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
-
-        return res.json(error).status(400);
+        let e = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
+        return res.json({ error: e }).status(400);
       } else {
         const token = jwtCreate(username);
         return res.status(200).json({
