@@ -1,8 +1,12 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
-import { jwtCreate } from "../controllers/jwt.js";
+import { jwtCreate } from "../middleware/jwt.js";
 import bcrypt from "bcrypt";
 import { hashPassword } from "./bcrypt.js";
+
+export const getAuth = (req, res) => {
+  res.send("success");
+};
 
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
@@ -38,7 +42,7 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         let e = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
         return res.json({ error: e }).status(400);
       } else {
-        const token = jwtCreate(username);
+        const token = jwtCreate(docs[0]._id);
         return res.status(200).json({
           success: true,
           message: "Sign-up successfull",
