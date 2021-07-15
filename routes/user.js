@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authenticateToken from "../controllers/auth.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 import {
   addUser,
   deleteUser,
@@ -9,7 +9,7 @@ import {
 
 const userRouter = Router();
 
-userRouter.post("/login", authenticateToken, getUser);
+userRouter.post("/login", requireAuth, getUser);
 
 userRouter.post("/add", addUser);
 
