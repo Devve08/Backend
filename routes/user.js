@@ -5,11 +5,14 @@ import {
   deleteUser,
   getUser,
   updateUser,
+  showUsers
 } from "../controllers/user.js";
 
 const userRouter = Router();
 
 userRouter.post("/login", requireAuth, getUser);
+
+userRouter.get("/users", showUsers)
 
 userRouter.post("/add", addUser);
 

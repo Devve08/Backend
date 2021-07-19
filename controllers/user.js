@@ -8,6 +8,8 @@ export const getAuth = (req, res) => {
   res.send("success");
 };
 
+
+
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
@@ -66,3 +68,8 @@ export const deleteUser = expressAsyncHandler(async (req, res) => {
   const deleteUsers = await User.deleteOne({ _id: id });
   res.send({ deleteUsers });
 });
+
+export const showUsers = expressAsyncHandler(async (req, res) => {
+    const user = await User.find({})
+  res.status(200).json({user})
+})
