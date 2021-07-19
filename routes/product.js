@@ -4,7 +4,7 @@ import { checkUser } from "../middleware/authMiddleware.js";
 
 const productRouter = express.Router();
 
-productRouter.get("*", checkUser);
+// productRouter.get("*", checkUser);
 
 productRouter.get("/", getProducts);
 

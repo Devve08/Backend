@@ -7,17 +7,23 @@ import { hashPassword } from "./bcrypt.js";
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const user = User.find({ username: username }, async (e, doc) => {
+  User.find({ username: username }, async (e, doc) => {
     if (doc.length === 0 || e) {
       return res.status(400).json(e);
     } else if (await bcrypt.compare(password, doc[0].password)) {
       const token = jwtCreate(username);
+      console.log({ doc });
       return res.status(200).json({ doc, token });
     } else {
       return res.json({ message: "wrong password" }).status(401);
     }
   });
 });
+
+// export const getUserCart = async (req, res) => {
+//   let { username } = req.body;
+//   User.findOne({username:username},async (e))
+// };
 
 export const addUser = expressAsyncHandler(async (req, res) => {
   let { name, username, password, email, address, phone } = req.body;
@@ -50,10 +56,30 @@ export const addUser = expressAsyncHandler(async (req, res) => {
 });
 
 export const updateUser = expressAsyncHandler(async (req, res) => {
-  let id = req.params.id;
-  let body = req.body;
-  const updateUsers = await User.updateOne({ _id: id }, { $set: body });
-  res.send({ updateUsers });
+  res.send("hello");
+});
+
+export const updateUserCart = expressAsyncHandler(async (req, res) => {
+  let username = req.body.username;
+  let { product, quantity } = req.body.cart[0];
+  let productObj = {
+    product: product,
+    quantity: quantity,
+  };
+  console.log({ product, quantity, username });
+  await User.updateOne(
+    { username: username },
+    { $set: { cart: productObj } },
+    (e, doc) => {
+      if (e) {
+        console.log({ e });
+        res.json(e);
+      } else {
+        console.log({ doc });
+        res.json(doc);
+      }
+    }
+  );
 });
 
 export const deleteUser = expressAsyncHandler(async (req, res) => {

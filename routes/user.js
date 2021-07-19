@@ -5,16 +5,21 @@ import {
   deleteUser,
   getUser,
   updateUser,
+  updateUserCart,
 } from "../controllers/user.js";
 
 const userRouter = Router();
+
+// userRouter.get("/cart", requireAuth);
 
 userRouter.post("/login", requireAuth, getUser);
 
 userRouter.post("/add", addUser);
 
-userRouter.put("/:id", updateUser);
+userRouter.put("/", requireAuth, updateUser);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.put("/cart", requireAuth, updateUserCart);
+
+userRouter.delete("/", deleteUser);
 
 export default userRouter;

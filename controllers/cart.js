@@ -1,11 +1,6 @@
-import expressAsyncHandler from "express-async-handler"
+import expressAsyncHandler from "express-async-handler";
+import User from "../models/user.model.js";
 
-
-export const addToCart = expressAsyncHandler(async (req, res) => {
-    const addTo = Cart.find()
-})
-
-export const getCart = (req, res) => {
-    res.send("hello")
-    console.log("hello")
-}
+export const getCart = async (req, res) => {
+  res.send("hello");
+};
