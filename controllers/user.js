@@ -4,15 +4,6 @@ import { jwtCreate } from "../middleware/jwt.js";
 import bcrypt from "bcrypt";
 import { hashPassword } from "./bcrypt.js";
 
-<<<<<<< HEAD
-export const getAuth = (req, res) => {
-  res.send("success");
-};
-
-
-
-=======
->>>>>>> d53947775c6e0b082e08718ea74835bf220d797c
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
