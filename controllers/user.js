@@ -4,20 +4,22 @@ import { jwtCreate } from "../middleware/jwt.js";
 import bcrypt from "bcrypt";
 import { hashPassword } from "./bcrypt.js";
 
+<<<<<<< HEAD
 export const getAuth = (req, res) => {
   res.send("success");
 };
 
 
 
+=======
+>>>>>>> d53947775c6e0b082e08718ea74835bf220d797c
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const user = User.find({ username: username }, async (e, doc) => {
     if (doc.length === 0 || e) {
-      return res.status(403);
-    }
-    if (await bcrypt.compare(password, doc[0].password)) {
+      return res.status(400).json(e);
+    } else if (await bcrypt.compare(password, doc[0].password)) {
       const token = jwtCreate(username);
       return res.status(200).json({ doc, token });
     } else {
