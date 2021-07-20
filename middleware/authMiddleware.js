@@ -16,8 +16,8 @@ export const requireAuth = (req, res, next) => {
             if (e) {
               return res.json({ error: e }).status(401);
             } else {
-              // console.log(decodedToken, doc);
-              res.json({ Token: decodedToken, doc: doc });
+              console.log(doc.cart);
+              res.json({ Token: decodedToken, doc: doc.cart });
             }
           });
         }
@@ -52,6 +52,35 @@ export const checkUser = (req, res, next) => {
     );
   } else {
     res.locals.user = null;
+    next();
+  }
+};
+
+export const cartRequireAuth = (req, res, next) => {
+  const token = req.body.token;
+  if (token) {
+    Jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET,
+      async (err, decodedToken) => {
+        // console.log(decodedToken.value);
+        if (err) {
+          console.log(err);
+        } else {
+          await User.findOne({ username: decodedToken.value }, (e, doc) => {
+            if (e) {
+              return res.json({ error: e }).status(401);
+            } else {
+              console.log(doc);
+              // res.json({ Token: decodedToken, doc: doc.cart });
+              req.username = decodedToken.value;
+              next();
+            }
+          });
+        }
+      }
+    );
+  } else {
     next();
   }
 };

@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { requireAuth, cartRequireAuth } from "../middleware/authMiddleware.js";
 import {
   addUser,
   deleteUser,
   getUser,
   updateUser,
-  updateUserCart,
+  addUserCart,
 } from "../controllers/user.js";
 
 const userRouter = Router();
@@ -18,7 +18,7 @@ userRouter.post("/add", addUser);
 
 userRouter.put("/", requireAuth, updateUser);
 
-userRouter.put("/cart", requireAuth, updateUserCart);
+userRouter.put("/cart", cartRequireAuth, addUserCart);
 
 userRouter.delete("/", deleteUser);
 

@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
-  product: {
+  product_id: {
     type: String,
+    unique: true,
   },
   quantity: {
     type: Number,

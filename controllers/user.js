@@ -59,23 +59,28 @@ export const updateUser = expressAsyncHandler(async (req, res) => {
   res.send("hello");
 });
 
-export const updateUserCart = expressAsyncHandler(async (req, res) => {
-  let username = req.body.username;
-  let { product, quantity } = req.body.cart[0];
+export const addUserCart = expressAsyncHandler(async (req, res) => {
+  //Cart Shit
+  const user = req.username;
+  console.log(req.body);
+
+  let { product_id, quantity } = req.body;
+
   let productObj = {
-    product: product,
+    product_id: product_id,
     quantity: quantity,
   };
-  console.log({ product, quantity, username });
+
+  console.log({ product_id, quantity, user });
   await User.updateOne(
-    { username: username },
-    { $set: { cart: productObj } },
+    { username: user },
+    { $push: { cart: productObj } },
     (e, doc) => {
       if (e) {
         console.log({ e });
         res.json(e);
       } else {
-        console.log({ doc });
+        // console.log({ doc });
         res.json(doc);
       }
     }
