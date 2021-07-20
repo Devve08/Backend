@@ -5,7 +5,8 @@ import {
   deleteUser,
   getUser,
   updateUser,
-  showUsers
+  showUsers,
+  createUser
 } from "../controllers/user.js";
 
 const userRouter = Router();
@@ -13,6 +14,8 @@ const userRouter = Router();
 userRouter.post("/login", requireAuth, getUser);
 
 userRouter.get("/users", showUsers)
+
+userRouter.post("/add-user", createUser);
 
 userRouter.post("/add", addUser);
 

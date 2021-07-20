@@ -1,4 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
+import express from "express";
 import User from "../models/user.model.js";
 import { jwtCreate } from "../middleware/jwt.js";
 import bcrypt from "bcrypt";
@@ -62,7 +63,39 @@ export const deleteUser = expressAsyncHandler(async (req, res) => {
   res.send({ deleteUsers });
 });
 
+
+// Mhamad routes //
+
 export const showUsers = expressAsyncHandler(async (req, res) => {
     const user = await User.find({})
   res.status(200).json({user})
 })
+
+export const createUser = (req, res) => {
+    if(!req.body){
+      res.status(400).send({
+        message : "Cannot add empty fields"
+      })
+      return;
+    } 
+      const user =  new User({
+        name: req.body.name,
+        username: req.body.username,
+        phone: req.body.phone,
+        email: req.body.email,
+        password: req.body.password,
+        isAdmin: req.body.isAdmin,
+        address: req.body.address
+      })
+    
+      user.save(user)
+      .then(data => {
+        res.send(data)
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: err.message
+        })
+      })
+    
+}
