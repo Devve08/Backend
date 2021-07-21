@@ -27,10 +27,8 @@ const userSchema = new Schema({
     unique: true,
   },
 
-  isAdmin: {
-    type: Boolean,
-    default: false,
-    required: true,
+  admin: {
+    type: String,
   },
 
   address: {
