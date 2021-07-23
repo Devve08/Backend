@@ -20,11 +20,6 @@ export const getUser = expressAsyncHandler(async (req, res) => {
   });
 });
 
-// export const getUserCart = async (req, res) => {
-//   let { username } = req.body;
-//   User.findOne({username:username},async (e))
-// };
-
 export const addUser = expressAsyncHandler(async (req, res) => {
   let { name, username, password, email, address, phone } = req.body;
 
@@ -43,7 +38,7 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         let e = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
         return res.json({ error: e }).status(400);
       } else {
-        const token = jwtCreate(docs[0]._id);
+        const token = jwtCreate(docs[0].username);
         return res.status(200).json({
           success: true,
           message: "Sign-up successfull",
@@ -59,33 +54,34 @@ export const updateUser = expressAsyncHandler(async (req, res) => {
   res.send("hello");
 });
 
-export const addUserCart = expressAsyncHandler(async (req, res) => {
-  //Cart Shit
-  const user = req.username;
-  console.log(req.body);
+// export const addUserCart = expressAsyncHandler(async (req, res) => {
+//   //Cart Shit
+//   const user = req.username;
+//   console.log(req.body);
 
-  let { product_id, quantity } = req.body;
+//   let { product_id, quantity } = req.body;
 
-  let productObj = {
-    product_id: product_id,
-    quantity: quantity,
-  };
+//   let productObj = {
+//     product_id: product_id,
+//     quantity: quantity,
+//   };
 
-  console.log({ product_id, quantity, user });
-  await User.updateOne(
-    { username: user },
-    { $push: { cart: productObj } },
-    (e, doc) => {
-      if (e) {
-        console.log({ e });
-        res.json(e);
-      } else {
-        // console.log({ doc });
-        res.json(doc);
-      }
-    }
-  );
-});
+//   console.log({ product_id, quantity, user });
+//   // const user =
+//   await User.updateOne(
+//     { username: user },
+//     { $push: { cart: productObj } },
+//     (e, doc) => {
+//       if (e) {
+//         console.log({ e });
+//         res.json(e);
+//       } else {
+//         // console.log({ doc });
+//         res.json(doc);
+//       }
+//     }
+//   );
+// });
 
 export const deleteUser = expressAsyncHandler(async (req, res) => {
   let id = req.params.id;

@@ -16,8 +16,8 @@ export const requireAuth = (req, res, next) => {
             if (e) {
               return res.json({ error: e }).status(401);
             } else {
-              console.log(doc.cart);
-              res.json({ Token: decodedToken, doc: doc.cart });
+              console.log({ sexy: decodedToken, doc: doc });
+              res.json({ Token: decodedToken, doc: doc });
             }
           });
         }
@@ -71,7 +71,6 @@ export const cartRequireAuth = (req, res, next) => {
             if (e) {
               return res.json({ error: e }).status(401);
             } else {
-              console.log(doc);
               // res.json({ Token: decodedToken, doc: doc.cart });
               req.username = decodedToken.value;
               next();

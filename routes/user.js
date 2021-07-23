@@ -5,8 +5,8 @@ import {
   deleteUser,
   getUser,
   updateUser,
-  addUserCart,
 } from "../controllers/user.js";
+import { updateUserCart, removeUserCart } from "../controllers/cart.js";
 
 const userRouter = Router();
 
@@ -18,7 +18,9 @@ userRouter.post("/add", addUser);
 
 userRouter.put("/", requireAuth, updateUser);
 
-userRouter.put("/cart", cartRequireAuth, addUserCart);
+userRouter.put("/cart", cartRequireAuth, updateUserCart);
+
+userRouter.delete("/cartremove", cartRequireAuth, removeUserCart);
 
 userRouter.delete("/", deleteUser);
 
