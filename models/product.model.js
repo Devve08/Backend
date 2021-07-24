@@ -7,11 +7,8 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-
   image: {
     type: String,
-    required: true,
-    unique: true
   },
 
   sex: {
@@ -54,10 +51,11 @@ const productSchema = new Schema({
     required: true,
   },
 
-  numReviews:{
+  numReviews: {
     type: Number,
-    required: true,
   }
+
+ 
 });
 
 const Product = mongoose.model("Product", productSchema);

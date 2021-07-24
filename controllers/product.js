@@ -3,18 +3,24 @@ import Product from "../models/product.model.js";
 
 export const getProducts = expressAsyncHandler(async (req, res) => {
   const products = await Product.find({}, (e, doc) => {
-    // console.log(doc)
+   
     if (doc.length === 0 || e) {
       return res.json({ message: "123" });
     } else {
       return res.send(doc);
     }
   });
-  // res.send({ products });
 });
 
-export const addProducts = expressAsyncHandler(async (req, res) => {
-  const createProduct = await new Product({
+
+export const addProducts = (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Cannot add empty fields",
+    });
+    return;
+  }
+  const product = new Product({
     name: req.body.name,
     sex: req.body.sex,
     category: req.body.category,
@@ -22,17 +28,25 @@ export const addProducts = expressAsyncHandler(async (req, res) => {
     price: req.body.price,
     description: req.body.description,
     rating: req.body.rating,
-    numReviews: req.body.numReviews,
     stock: req.body.stock,
     size: req.body.size,
-    image: req.body.image,
+    numReviews : req.body.numReviews,
+    image : req.file.fieldname
   });
-  createProduct
+  console.log("hi", req.file.fieldname)
+  product
     .save()
     .then((data) => {
-      res.json(data);
+      res.send({message : "successful"})
+     
     })
-    .catch((error) => {
-      res.json(error);
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message
+      })
     });
-});
+};
+
+
+
+
