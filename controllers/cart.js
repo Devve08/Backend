@@ -3,10 +3,12 @@ import User from "../models/user.model.js";
 
 export const removeUserCart = expressAsyncHandler(async (req, res) => {
   const user = req.username;
-  console.log(user);
+  console.log({ username: user });
 
-  let { product_id, quantity } = req.body.cart[0];
-  console.log(product_id, quantity, user);
+  console.log(req.body);
+
+  let { product_id, quantity } = req.body;
+  console.log(product_id, quantity);
 
   await User.updateMany(
     { username: user },
@@ -23,7 +25,7 @@ export const removeUserCart = expressAsyncHandler(async (req, res) => {
         console.log(e);
         res.status(401);
       } else {
-        console.log("worked");
+        console.log("delete worked");
         res.json(doc);
       }
     }
@@ -33,9 +35,34 @@ export const removeUserCart = expressAsyncHandler(async (req, res) => {
 export const updateUserCart = expressAsyncHandler(async (req, res) => {
   const user = req.username;
   console.log(user);
+  console.log(req.body);
 
-  let { product_id, quantity } = req.body.cart[0];
+  let { product_id, quantity } = req.body;
   console.log(product_id, quantity, user);
+
+  const pushCart = () => {
+    User.findOneAndUpdate(
+      { username: user },
+      {
+        $push: {
+          cart: {
+            product_id: product_id,
+            quantity: quantity,
+          },
+        },
+      },
+      (e, doc) => {
+        console.log({ doc: doc });
+        if (e) {
+          console.log({ function: "didnt work" });
+          res.json(e);
+        } else {
+          console.log({ function: "worked" });
+          res.json(doc);
+        }
+      }
+    );
+  };
 
   await User.updateMany(
     { username: user },
@@ -62,30 +89,6 @@ export const updateUserCart = expressAsyncHandler(async (req, res) => {
       }
     }
   );
-
-  const pushCart = async () => {
-    await User.findOneAndUpdate(
-      { username: user },
-      {
-        $push: {
-          cart: {
-            product_id: product_id,
-            quantity: quantity,
-          },
-        },
-      },
-      (e, doc) => {
-        console.log({ doc: doc });
-        if (e) {
-          console.log({ function: "didnt work" });
-          res.json(e);
-        } else {
-          console.log({ function: "worked" });
-          res.json(doc);
-        }
-      }
-    );
-  };
 });
 
 export const addUserCart = expressAsyncHandler(async (req, res) => {

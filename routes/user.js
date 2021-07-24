@@ -20,7 +20,7 @@ userRouter.put("/", requireAuth, updateUser);
 
 userRouter.put("/cart", cartRequireAuth, updateUserCart);
 
-userRouter.delete("/cartremove", cartRequireAuth, removeUserCart);
+userRouter.put("/cartremove", cartRequireAuth, removeUserCart);
 
 userRouter.delete("/", deleteUser);
 

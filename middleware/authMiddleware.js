@@ -69,6 +69,7 @@ export const cartRequireAuth = (req, res, next) => {
         } else {
           await User.findOne({ username: decodedToken.value }, (e, doc) => {
             if (e) {
+              console.log({ auth: e });
               return res.json({ error: e }).status(401);
             } else {
               // res.json({ Token: decodedToken, doc: doc.cart });
