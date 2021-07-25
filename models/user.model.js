@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Cart from "./cart.js";
 
 const Schema = mongoose.Schema;
 
@@ -40,6 +41,7 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
+  cart: [Cart],
 });
 
 const User = mongoose.model("User", userSchema);

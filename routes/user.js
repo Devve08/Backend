@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { requireAuth, cartRequireAuth } from "../middleware/authMiddleware.js";
 import {
   addUser,
   deleteUser,
@@ -8,8 +8,11 @@ import {
   showUsers,
   createUser
 } from "../controllers/user.js";
+import { updateUserCart, removeUserCart } from "../controllers/cart.js";
 
 const userRouter = Router();
+
+// userRouter.get("/cart", requireAuth);
 
 userRouter.post("/login", requireAuth, getUser);
 
@@ -19,8 +22,12 @@ userRouter.post("/add-user", createUser);
 
 userRouter.post("/add", addUser);
 
-userRouter.put("/:id", updateUser);
+userRouter.put("/", requireAuth, updateUser);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.put("/cart", cartRequireAuth, updateUserCart);
+
+userRouter.put("/cartremove", cartRequireAuth, removeUserCart);
+
+userRouter.delete("/", deleteUser);
 
 export default userRouter;

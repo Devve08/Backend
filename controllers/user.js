@@ -8,11 +8,12 @@ import { hashPassword } from "./bcrypt.js";
 export const getUser = expressAsyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const user = User.find({ username: username }, async (e, doc) => {
+  User.find({ username: username }, async (e, doc) => {
     if (doc.length === 0 || e) {
       return res.status(400).json(e);
     } else if (await bcrypt.compare(password, doc[0].password)) {
       const token = jwtCreate(username);
+      console.log({ doc });
       return res.status(200).json({ doc, token });
     } else {
       return res.json({ message: "wrong password" }).status(401);
@@ -38,7 +39,7 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         let e = err.writeErrors[0].errmsg.split(":")[3].split(" ")[2];
         return res.json({ error: e }).status(400);
       } else {
-        const token = jwtCreate(docs[0]._id);
+        const token = jwtCreate(docs[0].username);
         return res.status(200).json({
           success: true,
           message: "Sign-up successfull",
@@ -50,24 +51,43 @@ export const addUser = expressAsyncHandler(async (req, res) => {
   );
 });
 
-// export const updateUser = expressAsyncHandler(async (req, res) => {
-//   let id = req.params.id;
-//   let body = req.body;
-//   const updateUsers = await User.updateOne({ _id: id }, { $set: body });
-//   res.send({ updateUsers });
+export const updateUser = expressAsyncHandler(async (req, res) => {
+  res.send("hello");
+});
+
+// export const addUserCart = expressAsyncHandler(async (req, res) => {
+//   //Cart Shit
+//   const user = req.username;
+//   console.log(req.body);
+
+//   let { product_id, quantity } = req.body;
+
+//   let productObj = {
+//     product_id: product_id,
+//     quantity: quantity,
+//   };
+
+//   console.log({ product_id, quantity, user });
+//   // const user =
+//   await User.updateOne(
+//     { username: user },
+//     { $push: { cart: productObj } },
+//     (e, doc) => {
+//       if (e) {
+//         console.log({ e });
+//         res.json(e);
+//       } else {
+//         // console.log({ doc });
+//         res.json(doc);
+//       }
+//     }
+//   );
 // });
 
-// export const deleteUser = expressAsyncHandler(async (req, res) => {
-//   let id = req.params.id;
-//   const deleteUsers = await User.deleteOne({ _id: id });
-//   res.send({ deleteUsers });
-// });
-
-// Mhamad routes //
-
-export const showUsers = expressAsyncHandler(async (req, res) => {
-  const user = await User.find({});
-  res.status(200).json({ user });
+export const deleteUser = expressAsyncHandler(async (req, res) => {
+  let id = req.params.id;
+  const deleteUsers = await User.deleteOne({ _id: id });
+  res.send({ deleteUsers });
 });
 
 export const updateUser = (req,res) => {
