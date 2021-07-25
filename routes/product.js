@@ -10,8 +10,7 @@ let storage = multer.diskStorage({
         cb(null, 'uploads')
     },
     filename: function(req, file, cb){
-        let ext = file.originalname
-        cb(null, file.fieldname + "-" + Date.now()+ "-" + ext)
+        cb(null, file.originalname)
     }
 })
 
@@ -22,6 +21,6 @@ productRouter.get("*", checkUser);
 
 productRouter.get("/", getProducts);
 
-productRouter.post("/create", upload.single("photo") ,addProducts);
+productRouter.post("/create", upload.single("productImage") ,addProducts);
 
 export default productRouter;

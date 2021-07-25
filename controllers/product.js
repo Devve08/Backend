@@ -13,13 +13,7 @@ export const getProducts = expressAsyncHandler(async (req, res) => {
 });
 
 
-export const addProducts = (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "Cannot add empty fields",
-    });
-    return;
-  }
+export const addProducts = async (req, res) => {
   const product = new Product({
     name: req.body.name,
     sex: req.body.sex,
@@ -31,17 +25,17 @@ export const addProducts = (req, res) => {
     stock: req.body.stock,
     size: req.body.size,
     numReviews : req.body.numReviews,
-    image : req.file.fieldname
+    image: req.body.image
   });
-  console.log("hi", req.file.fieldname)
+
   product
     .save()
     .then((data) => {
-      res.send({message : "successful"})
+      res.send({message : data})
      
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(404).send({
         message: err.message
       })
     });
