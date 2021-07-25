@@ -51,6 +51,11 @@ export const addUser = expressAsyncHandler(async (req, res) => {
   );
 });
 
+export const showUsers = expressAsyncHandler(async (req, res) => {
+  const user = await User.find({})
+res.status(200).json({user})
+})
+
 export const updateUser = (req, res) => {
   const id = req.params.id;
 

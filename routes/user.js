@@ -5,7 +5,7 @@ import {
   deleteUser,
   getUser,
   updateUser,
-  // showUsers,
+  showUsers,
   createUser,
 } from "../controllers/user.js";
 import { updateUserCart, removeUserCart } from "../controllers/cart.js";
@@ -16,7 +16,7 @@ const userRouter = Router();
 
 userRouter.post("/login", requireAuth, getUser);
 
-// userRouter.get("/users", showUsers)
+userRouter.get("/users", showUsers)
 
 userRouter.post("/add-user", createUser);
 
