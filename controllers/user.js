@@ -51,62 +51,23 @@ export const addUser = expressAsyncHandler(async (req, res) => {
   );
 });
 
-export const updateUser = expressAsyncHandler(async (req, res) => {
-  res.send("hello");
-});
+export const updateUser = (req, res) => {
+  const id = req.params.id;
 
-// export const addUserCart = expressAsyncHandler(async (req, res) => {
-//   //Cart Shit
-//   const user = req.username;
-//   console.log(req.body);
-
-//   let { product_id, quantity } = req.body;
-
-//   let productObj = {
-//     product_id: product_id,
-//     quantity: quantity,
-//   };
-
-//   console.log({ product_id, quantity, user });
-//   // const user =
-//   await User.updateOne(
-//     { username: user },
-//     { $push: { cart: productObj } },
-//     (e, doc) => {
-//       if (e) {
-//         console.log({ e });
-//         res.json(e);
-//       } else {
-//         // console.log({ doc });
-//         res.json(doc);
-//       }
-//     }
-//   );
-// });
-
-export const deleteUser = expressAsyncHandler(async (req, res) => {
-  let id = req.params.id;
-  const deleteUsers = await User.deleteOne({ _id: id });
-  res.send({ deleteUsers });
-});
-
-export const updateUser = (req,res) => {
-  const id = req.params.id
-
-  User.findByIdAndUpdate(id, req.body, {useFindAndModify : false})
-  .then(data => {
-    if(!data){
-      res.send(404).send({message : "cannot update this user"})
-    }else{
-      res.send(data)
-    }
-  })
-  .catch(err => {
-    res.status(500).send({
-      message : "Error update"
+  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res.send(404).send({ message: "cannot update this user" });
+      } else {
+        res.send(data);
+      }
     })
-  })
-}
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error update",
+      });
+    });
+};
 
 export const deleteUser = (req, res) => {
   const id = req.params.id;
