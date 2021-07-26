@@ -16,7 +16,7 @@ const userRouter = Router();
 
 userRouter.post("/login", requireAuth, getUser);
 
-// userRouter.get("/users", showUsers)
+// userRouter.get("/users", showUsers);
 
 userRouter.post("/add-user", createUser);
 
