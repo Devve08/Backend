@@ -22,12 +22,12 @@ userRouter.post("/add-user", createUser);
 
 userRouter.post("/add", addUser);
 
-userRouter.put("/", requireAuth, updateUser);
+userRouter.put("/:id",requireAuth, updateUser);
 
 userRouter.put("/cart", cartRequireAuth, updateUserCart);
 
 userRouter.put("/cartremove", cartRequireAuth, removeUserCart);
 
-userRouter.delete("/", deleteUser);
+userRouter.delete("/:id", deleteUser);
 
 export default userRouter;
