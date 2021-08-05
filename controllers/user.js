@@ -22,6 +22,7 @@ export const getUser = expressAsyncHandler(async (req, res) => {
 });
 
 export const addUser = expressAsyncHandler(async (req, res) => {
+  console.log("here");
   let { name, username, password, email, address, phone } = req.body;
 
   await User.insertMany(
@@ -30,7 +31,7 @@ export const addUser = expressAsyncHandler(async (req, res) => {
       username: username,
       password: await hashPassword(password),
       email: email,
-      isAdmin: isAdmin,
+      isAdmin: false,
       address: address,
       phone: phone,
     },
@@ -40,6 +41,7 @@ export const addUser = expressAsyncHandler(async (req, res) => {
         return res.json({ error: e }).status(400);
       } else {
         const token = jwtCreate(docs[0].username);
+        console.log("working");
         return res.status(200).json({
           success: true,
           message: "Sign-up successfull",

@@ -16,17 +16,13 @@ const userRouter = Router();
 
 userRouter.post("/login", requireAuth, getUser);
 
-<<<<<<< HEAD
-// userRouter.get("/users", showUsers);
-=======
-userRouter.get("/users", showUsers)
->>>>>>> e22c8e73c2429df2a40ca018b7a0b8de3a2f37f1
+userRouter.get("/users", showUsers);
 
 userRouter.post("/add-user", createUser);
 
 userRouter.post("/add", addUser);
 
-userRouter.put("/:id",requireAuth, updateUser);
+// userRouter.put("/:id", requireAuth, updateUser);
 
 userRouter.put("/cart", cartRequireAuth, updateUserCart);
 
