@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Cart from "./cart.js";
 
 const Schema = mongoose.Schema;
 
@@ -15,17 +16,20 @@ const userSchema = new Schema({
     unique: true,
   },
 
+  password: {
+    type: String,
+    required: true,
+  },
+
   email: {
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
 
-  isAdmin:{
-    type: Boolean,
-    default: false,
-    required: true
+  admin: {
+    type: String,
   },
 
   address: {
@@ -37,6 +41,7 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
+  cart: [Cart],
 });
 
 const User = mongoose.model("User", userSchema);

@@ -2,13 +2,13 @@ import express, { json } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
-
-import productRouter from "./routes/product.js";
-import userRouter from "./routes/user.js";
+import bodyParser from "body-parser";
+import appRoutes from "./routes/index.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(cors());
 app.use(json());
 
@@ -28,18 +28,10 @@ mongoose.connection
     console.log(e);
   });
 
-app
-  .use("/product", productRouter)
-
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
-app
-  .use("/user", userRouter)
-
-  .on("error", (error) => {
-    console.log("your error", error);
-  });
+app.use(appRoutes);
+app.on("error", (e) => {
+  console.log("your error", e);
+});
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
