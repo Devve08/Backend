@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fe455164.chunk.css",
+    "main.js": "/static/js/main.84f696ac.chunk.js",
+    "main.js.map": "/static/js/main.84f696ac.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.8233b8b5.js",
+    "runtime-main.js.map": "/static/js/runtime-main.8233b8b5.js.map",
+    "static/js/2.e24d9444.chunk.js": "/static/js/2.e24d9444.chunk.js",
+    "static/js/2.e24d9444.chunk.js.map": "/static/js/2.e24d9444.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.fe455164.chunk.css.map": "/static/css/main.fe455164.chunk.css.map",
+    "static/js/2.e24d9444.chunk.js.LICENSE.txt": "/static/js/2.e24d9444.chunk.js.LICENSE.txt",
+    "static/media/Jack-background.eeb4c5a7.jpg": "/static/media/Jack-background.eeb4c5a7.jpg",
+    "static/media/index.css": "/static/media/OpenSans-Bold.dbb97fd9.ttf",
+    "static/media/acce-outfit.d7e9b131.jpg": "/static/media/acce-outfit.d7e9b131.jpg",
+    "static/media/adidas-background.c2be23cf.jpg": "/static/media/adidas-background.c2be23cf.jpg",
+    "static/media/adidas-outfit.af2dd9ef.jpg": "/static/media/adidas-outfit.af2dd9ef.jpg",
+    "static/media/hm-background.03cceb2b.jpg": "/static/media/hm-background.03cceb2b.jpg",
+    "static/media/hm-outfit.40a1d126.jpg": "/static/media/hm-outfit.40a1d126.jpg",
+    "static/media/jack-outfit.a7821fee.jpg": "/static/media/jack-outfit.a7821fee.jpg",
+    "static/media/lacoste-background.440c582d.jpg": "/static/media/lacoste-background.440c582d.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8233b8b5.js",
+    "static/js/2.e24d9444.chunk.js",
+    "static/css/main.fe455164.chunk.css",
+    "static/js/main.84f696ac.chunk.js"
+  ]
+}
