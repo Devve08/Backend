@@ -1,15 +1,14 @@
 import express, { json } from "express";
-import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import bodyParser from "body-parser";
 import appRoutes from "./routes/index.js";
+import path from "path";
 
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
-app.use(cors());
 app.use(json());
 
 // connecting to database
@@ -40,4 +39,12 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
+});
+
+if (process.env.NODE_ENV == 'production'){
+  app.use(express.static(path.resolve(__dirname, '../Backend/build')));
+}
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../Backend/build', 'index.html'));
 });
